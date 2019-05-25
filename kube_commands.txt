@@ -1,0 +1,78 @@
+https://www.howtoforge.com/tutorial/centos-kubernetes-docker-cluster/
+
+[root@localhost ~]# history
+    1  ifconfig -a
+    2  yum install -y yum-utils device-mapper-persistent-data lvm2
+    3  yum update
+    4  yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+    5  yum install -y docker-ce
+    6  cat <<EOF > /etc/yum.repos.d/kubernetes.repo
+    7  [kubernetes]
+    8  name=Kubernetes
+    9  baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+   10  enabled=1
+   11  gpgcheck=1
+   12  repo_gpgcheck=1
+   13  gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
+   14          https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+   15  EOF
+   16  yum install -y kubelet kubeadm kubectl
+   17  sudo reboot
+   18  systemctl start docker && systemctl enable docker
+   19  systemctl start kubelet && systemctl enable kubelet
+   20  docker info | grep -i cgroup
+   21  sed -i 's/cgroup-driver=systemd/cgroup-driver=cgroupfs/g' /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+   22  docker info | grep -i cgroup
+   23  systemctl daemon-reload
+   24  systemctl restart kubelet
+   25  systemctl status kubelet
+   26  ifconfig
+   27  kubeadm init --apiserver-advertise-address=192.168.28.21 --pod-network-cidr=10.0.0.0/16
+   28  systemctl stop firewalld
+   29  systemctl disable firewalld
+   30  swapoff -a
+   31  ci /etc/fstab
+   32  vi /etc/fstab
+   33  kubeadm init --apiserver-advertise-address=192.168.28.21 --pod-network-cidr=10.0.0.0/16
+   34  vi /etc/hosts
+   35  cat /etc/hosts
+   36  vi /etc/selinux/config
+   37  setenforce 0
+   38  mkdir -p $HOME/.kube
+   39    sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+   40    sudo chown $(id -u):$(id -g) $HOME/.kube/config
+   41  history
+
+ kubectl get nodes
+
+[root@worker-1 ~]# history
+    1  ip a
+    2  vi /etc/hosts
+    3  systemctl status firewalld
+    4  systemctl stop firewalld
+    5  systemctl disable firewalld
+    6  swapoff -a
+    7  vi /etc/fstab
+    8  vi /etc/selinux/config
+    9  setenforce 0
+   10  kubeadm join 192.168.28.21:6443 --token z43u4d.9xpqkickkxmlbtwz --discovery-token-ca-cert-hash sha256:212879004ef3099b89aa0acde8551cbc6958210165129ae19c81aeb76b25e230
+   11  yum install -y yum-utils device-mapper-persistent-data lvm2
+   12  yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+   13  yum install -y docker-ce
+   14  cat <<EOF > /etc/yum.repos.d/kubernetes.repo
+   15  [kubernetes]
+   16  name=Kubernetes
+   17  baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+   18  enabled=1
+   19  gpgcheck=1
+   20  repo_gpgcheck=1
+   21  gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
+   22         https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+   23  EOF
+   24  yum install -y kubelet kubeadm kubectl
+   25  reboot
+   26  kubeadm join 192.168.28.21:6443 --token z43u4d.9xpqkickkxmlbtwz --discovery-token-ca-cert-hash sha256:212879004ef3099b89aa0acde8551cbc6958210165129ae19c81aeb76b25e230
+   27  systemctl start docker && systemctl enable docker
+   28  systemctl start kubelet && systemctl enable kubelet
+   29  kubeadm join 192.168.28.21:6443 --token z43u4d.9xpqkickkxmlbtwz --discovery-token-ca-cert-hash sha256:212879004ef3099b89aa0acde8551cbc6958210165129ae19c81aeb76b25e230
+   30  history

@@ -1,0 +1,110 @@
+Docker Installation:
+
+1. To Uninstall all previous version
+
+	$ yum remove docker \
+                  docker-client \
+                  docker-client-latest \
+                  docker-common \
+                  docker-latest \
+                  docker-latest-logrotate \
+                  docker-logrotate \
+                  docker-selinux \
+                  docker-engine-selinux \
+                  docker-engine
+
+2. SET UP THE REPOSITORY
+	1) Install required packages. yum-utils provides the yum-config-manager utility, and device-mapper-persistent-data and lvm2 are required by the devicemapper 	   storage driver.
+
+		$ yum install -y yum-utils device-mapper-persistent-data lvm2
+
+	2) Use the following command to set up the stable repository. You always need the stable repository, even if you want to install builds from the edge or test 	   repositories as well.
+
+		$ yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+3. Install the latest version of Docker CE, or go to the next step to install a specific version:
+
+		$ yum install docker-ce
+
+			(OR)
+
+		$ yum list docker-ce --showduplicates | sort -r
+		$ yum install docker-ce-<VERSION STRING>
+
+4. Start Docker
+	$ systemctl start docker
+
+5. Verify that docker is installed correctly by running the hello-world image.
+
+		$ docker run hello-world
+
+Docker Commands:
+
+1. To view list of docker images in local machine ----> $ docker images
+
+2. To view running docker container ----> $ docker ps
+
+3. To view all (running & exiting) docker container ----> $ docker ps -a
+
+4. To remove docker container ----> $ docker rm 6ad0208f349e(container ID)
+
+5. To remove docker images in local machine ----> $ docker rmi fce289e99eb9(Image ID)
+
+6. To stop running docker container ----> $ docker stop 6ad0208f349e(container ID)
+
+7. To start running docker container ----> $ docker start 6ad0208f349e(container ID)
+
+8. Sample docker file
+
+	$ vi Dockerfile
+		From node:latest   ----> Image name from dockerhub
+		MAINTAINER gopac25@gmail.com ----> who is maintaing this docker file
+		WORKDIR /project/first/webpage ----> Home directory for that application
+		RUN git clone https://github.com/gopac25/nodejs_app_deploy.git /project/first/webpage/ ----> clone application files from github repositary
+		RUN npm install ----> install npm package
+		EXPOSE 8085 ----> Expose required port. this case our port is 8085
+		CMD [ "npm", "start" ] ----> Once docker container started run this command to start npm server
+
+9. To build image using docker file
+
+	$ docker build -t gopac/first-webpage .
+
+10. To run the docker container
+
+	$ docker run -p 8085:8085 -d gopac/first-webpage
+
+
+
+
+http://tnpensionmanagement.nextify.in/angular
+ 
+ 
+ 
+ Web:
+
+From node:latest
+MAINTAINER gopac25@gmail.com
+WORKDIR /data/web
+RUN git clone https://github.com/vignaz/angularjs-webapp-demo.git /data/web
+RUN npm install -g lite-server
+EXPOSE 80
+CMD lite-server
+
+app:
+From node:latest
+MAINTAINER gopac25@gmail.com
+WORKDIR /data/app
+RUN git clone https://github.com/vignaz/expressandnodejsdemo.git /data/app
+RUN npm install -g express
+EXPOSE 3000
+CMD npm start
+
+
+
+docker run -p 5984:5984 -v /data/db01:/data/db01 -w /data/db01 --restart unless-stopped --name hosur_couchdb -d couchdb 
+
+docker run -p 3000:3000 -v /data/app:/data/app --restart unless-stopped --name hosur_app -d gopac/node_app:v2.0
+
+docker run -p 80:80 -v /data/web:/data/web --restart unless-stopped --name hosur_web -d gopac/web_app:v2.0
+
+http://shop.nextify.in/

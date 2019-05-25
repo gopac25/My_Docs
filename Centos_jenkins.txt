@@ -1,0 +1,81 @@
+CentOS 7 Installation:
+
+1. Install CentOS in VMware
+
+2. Enable IP Address:
+	$ nmtui
+	--> Edit a connection --> Enter  --> ens33 ( NW adapter)
+	--> [X] Automatically connect --> enable this then you will get IP address
+
+3. Yum repo creation:
+	$ yum clean all
+	$ rpm -Uvh http://mirror.centos.org/centos/7/extras/x86_64/Packages/epel-release-7-11.noarch.rpm
+	$ yum install vim
+	$ yum update -y
+
+	--> To disable selinux
+		$ Vi /etc/selinux/config  --> SELINUX=enforcing to SELINUX=disabled
+
+	--> Temporarily disable selinux
+		$ setenforce 0   --> this will change from enforcing to permissive
+
+	--> To check the selinux status
+		$ sestatus
+
+	--> Restart the machine
+
+4. To enable ifconfig command:
+	$ yum install net-tools
+
+5. To install Jenkins:
+	1) To install Java
+		$ yum install java-1.8.0-openjdk-devel
+
+	2) To add Jenkins repo with key
+		$ curl --silent --location http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo | sudo tee /etc/yum.repos.d/jenkins.repo
+		$ rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
+
+	3) To Install jenkins	
+		$ yum install jenkins
+
+	4) To start jenkins
+		$ systemctl start jenkins
+
+	5) To check the jenkins status
+		$ systemctl status jenkins
+
+	6) To enable jenkins during boot
+		$ systemctl enable jenkins
+		$ chkconfig jenkins on
+
+	7) Firewall settings
+		1) To enable port 8080 in firewall (open the necessary port)
+			$ sudo firewall-cmd --permanent --zone=public --add-port=8080/tcp
+			$ sudo firewall-cmd --reload
+				(OR)
+	   	2) Disable the firewall	
+			$ systemctl stop firewalld
+			$ systemctl disable firewalld  --> Permanently diable firewalld service
+			$ systemctl status firewalld
+	8) Login with ip address and port 8080
+		--> Open web browser. Then give http://192.168.11.143:8080
+		--> Give administrator initial password
+			$ cat /var/lib/jenkins/secrets/initialAdminPassword
+			272bf25c9ccd4985af51d7d0791a7b71
+		--> Then install suggested plugins
+		--> Create first user
+			username:
+			Password:
+			Confirm Password:
+			Fullname:
+			Email:
+		--> save and continue
+		--> Then it will show instance configuration
+			http://192.168.11.143:8080/	--> Like this
+		--> Save and Finish
+		--> Jenkins is ready --> Start using jenkins
+
+							
+
+
+

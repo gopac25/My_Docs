@@ -1,0 +1,118 @@
+DB -2  
+NB -2 
+SB -2
+
+CPE
+cpe logs
+netflix and widevine
+compaigns --> 
+provisoin
+FTI
+rebooting
+
+1-6 
+
+
+relases:
+
+
+1 month
+300 stories
+user stories[30]  ----> R.......
+
+sprint M2D3, R4.5, R4.6 -------R4.14
+
+
+ACS Devolopment --> Lab[OBOSI] --> E2ESI[5A] -->PreProd --> PROD
+
+PreProd/Prod
+Jump Server[2] --> BE[TN]
+NL -->Ziggo
+CH[UPC]
+UK --> VM
+
+
+CL[VTR] - Another time zone
+
+ACS
+
+R4.13
+R4.14--> ACS
+R4.15
+....
+
+...
+
+
+ACS
+VSPP [ software, packages, VOD recording images....... ]
+CDN
+
+
+
+https://wikiprojects.upc.biz/display/CTOOBO/ACS+Deployment+Process+Flow#space-menu-link-content
+
+1. Access to the servers [production server] vpn --> jump server --> acs servers --> temp sudo access
+2. Application LLD[E2ESI team] --> Ip's info and variables
+   BE              --> krunoslav_misic
+   NL/CH/UK/CL     --> piotrkakol7
+3. Pre Requisites
+4. Deployment/upgrade
+5. sanity check
+6. TAF Job
+7. Handover the application E2ESI[Reboot,FTI,factory reset, upgrade, downgrade, -----]
+
+
+Infra and network LLD
+
+Access:
+UIM: https://ssp.upcbroadband.com/ --> request account
+Service access : CNT-CIO-DC-MGT-GREEN,CNT-ECX-JUMPHOSTS,CNTLABS-LGI-Users
+Lab  VPN: SI[OBOSI],5A[E2ESI]   https://lab-ssl.upcbroadband.com/sslvpn/Login/Login
+PROD VPN: https://ssl01.upcbroadband.com/ https://ssl02.upcbroadband.com/
+Jump Servers info: https://wikiprojects.upc.biz/pages/viewpage.action?spaceKey=CTOOBO&title=Procedure+Jump+server
+Infra and Network LLD: https://bitbucket.upc.biz/projects/COS/repos/oboarchitecture/browse
+
+
+intial setup --> delta changes[R4.13] --> R4.15 
+
+Repository : https://bitbucket.upc.biz/projects/COS/repos/oboaxirosautomation/browse
+Infra and NW LLD's: https://bitbucket.upc.biz/projects/COS/repos/oboarchitecture/browse
+prechecks page: https://wikiprojects.upc.biz/pages/viewpage.action?spaceKey=CTOOBO&title=App+Deployment+-+Prerequisite+Checks
+Nexus PROD : http://172.23.27.252:8081/
+Release
+
+1. Application LLD  https://jira.lgi.io/browse/ODEP-26971
+2. deployment/upgrade https://jira.lgi.io/browse/ODEP-26972 
+3. Test case https://jira.lgi.io/browse/ODEP-26973
+
+
+Nexus Repository --> Jenkins PROD --> ACS Servers
+
+Jenkins PROD: 172.23.27.249
+ANSIBLE1: 172.23.27.231
+Groovy file: https://bitbucket.upc.biz/projects/COS/repos/oboaxirosautomation/browse/pipeline/stages/Deployment/stages.groovy
+
+MySQL,NB/SB ANSIBLE 2.2.1.0
+GUI
+R4./7
+.
+.
+.
+.
+R4.13 ansible 2.3.10
+
+
+Mysql:
+Inside chroot: 
+1./etc/init.d/mysql status
+2. mysql replication test with test data
+3. show slave status\G
+
+NB/SB:
+1.inside chroot /etc/init.d/axess_all_daemons status
+
+GUI:
+Jump Server --> Production_server
+
+ACS Deployment guide: https://wikiprojects.upc.biz/display/CTOOBO/ACS+Automated+Pipeline+Guide

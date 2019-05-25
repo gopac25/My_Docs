@@ -1,0 +1,15 @@
+tasks:
+
+  - wait_for:
+      host: "{{ inventory_hostname }}"
+      port: 22
+    delegate_to: localhost
+
+
+
+roles:
+  - webserver
+
+tasks:
+  - script: verify.sh
+    check_mode: no
